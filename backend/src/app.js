@@ -20,10 +20,10 @@ const allowedOrigins = [
 dotenv.config();
 
 const app = express();
-const allowedOrigins = (process.env.CORS_ORIGINS || "http://localhost:5173,http://localhost:5174,http://localhost:3000")
-  .split(",")
-  .map((origin) => origin.trim())
-  .filter(Boolean);
+// const allowedOrigins = (process.env.CORS_ORIGINS || "http://localhost:5173,http://localhost:5174,http://localhost:3000")
+//   .split(",")
+//   .map((origin) => origin.trim())
+//   .filter(Boolean);
 
 app.use(cors({
   origin(origin, callback) {
