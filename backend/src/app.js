@@ -1,4 +1,4 @@
-const express = require("express");
+﻿const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const authRouter = require("./routes/auth.routes");
@@ -11,6 +11,11 @@ const dashboardRouter = require("./routes/dashboard.routes");
 const exportRouter = require("./routes/export.routes");
 const notificationRouter = require("./routes/notification.routes");
 const userRouter = require("./routes/user.routes");
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+  "https://edutrack-gray.vercel.app"
+];
 
 dotenv.config();
 
