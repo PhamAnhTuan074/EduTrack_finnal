@@ -1,0 +1,156 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  TECHNICIAN
+  REPORTER
+}
+
+enum UserStatus {
+  ACTIVE
+  LOCKED
+}
+
+enum RoomType {
+  THEORY
+  COMPUTER_LAB
+  LAB
+}
+
+enum RoomStatus {
+  ACTIVE
+  MAINTENANCE
+}
+
+enum DeviceType {
+  PROJECTOR
+  TV
+  AIR_CONDITIONER
+  COMPUTER
+  SPEAKER
+  TABLE_CHAIR
+  OTHER
+}
+
+enum DeviceStatus {
+  GOOD
+  BROKEN
+  REPAIRING
+}
+
+enum ReportStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum NotificationType {
+  DAMAGE_REPORT
+  ADMIN_ANNOUNCEMENT
+  REPAIR_UPDATE
+}
+
+model User {
+  id               Int            @id @default(autoincrement())
+  fullName         String
+  username         String         @unique
+  passwordHash     String
+  role             Role
+  status           UserStatus     @default(ACTIVE)
+  failedLoginCount Int            @default(0)
+  lockedUntil      DateTime?
+  damageReports    DamageReport[]
+  repairLogs       RepairLog[]
+  notifications    Notification[] @relation("RecipientNotifications")
+  sentNotifications Notification[] @relation("ActorNotifications")
+  createdAt        DateTime       @default(now())
+}
+
+model Room {
+  id            Int            @id @default(autoincrement())
+  code          String         @unique
+  type          RoomType
+  capacity      Int
+  status        RoomStatus     @default(ACTIVE)
+  devices       Device[]
+  damageReports DamageReport[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Device {
+  id                Int                  @id @default(autoincrement())
+  code              String               @unique
+  name              String
+  type              DeviceType
+  status            DeviceStatus         @default(GOOD)
+  importedAt        DateTime             @default(now())
+  roomId            Int
+  room              Room                 @relation(fields: [roomId], references: [id], onDelete: Restrict)
+  damageReportItems DamageReportDevice[]
+  repairLogs        RepairLog[]
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+}
+
+model DamageReport {
+  id          Int                  @id @default(autoincrement())
+  reporterId  Int
+  roomId      Int
+  description String
+  status      ReportStatus         @default(PENDING)
+  reporter    User                 @relation(fields: [reporterId], references: [id], onDelete: Restrict)
+  room        Room                 @relation(fields: [roomId], references: [id], onDelete: Restrict)
+  devices     DamageReportDevice[]
+  repairLogs  RepairLog[]
+  notifications Notification[]
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
+}
+
+model DamageReportDevice {
+  reportId Int
+  deviceId Int
+  report   DamageReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  device   Device       @relation(fields: [deviceId], references: [id], onDelete: Restrict)
+
+  @@id([reportId, deviceId])
+}
+
+model RepairLog {
+  id           Int          @id @default(autoincrement())
+  deviceId     Int
+  reportId     Int?
+  technicianId Int
+  quantity     Int          @default(1)
+  repairedAt   DateTime
+  content      String
+  afterStatus  DeviceStatus
+  device       Device       @relation(fields: [deviceId], references: [id], onDelete: Restrict)
+  report       DamageReport? @relation(fields: [reportId], references: [id], onDelete: SetNull)
+  technician   User         @relation(fields: [technicianId], references: [id], onDelete: Restrict)
+  createdAt    DateTime     @default(now())
+}
+
+model Notification {
+  id          Int              @id @default(autoincrement())
+  type        NotificationType
+  title       String
+  message     String
+  isRead      Boolean          @default(false)
+  recipientId Int?
+  actorId     Int?
+  reportId    Int?
+  recipient   User?            @relation("RecipientNotifications", fields: [recipientId], references: [id], onDelete: Cascade)
+  actor       User?            @relation("ActorNotifications", fields: [actorId], references: [id], onDelete: SetNull)
+  report      DamageReport?    @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
