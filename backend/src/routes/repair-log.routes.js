@@ -5,6 +5,34 @@ const { authenticate, authorize } = require("../middlewares/auth.middleware");
 const router = express.Router();
 const validDeviceStatuses = ["GOOD", "BROKEN", "REPAIRING"];
 
+function buildCompletedMessage(report) {
+  const deviceNames = report.devices
+    .map((item) => item.device?.name)
+    .filter(Boolean)
+    .join(", ");
+
+  return deviceNames
+    ? `Phiếu báo hỏng tại phòng ${report.room.code} đã được sửa hoàn tất. Thiết bị đã hoạt động tốt: ${deviceNames}.`
+    : `Phiếu báo hỏng tại phòng ${report.room.code} đã được sửa hoàn tất.`;
+}
+
+async function createCompletedNotification(tx, report, actorId) {
+  if (!report.reporterId) {
+    return;
+  }
+
+  await tx.notification.create({
+    data: {
+      type: "REPAIR_UPDATE",
+      title: `Hoàn thành phiếu báo hỏng #${report.id}`,
+      message: buildCompletedMessage(report),
+      recipientId: report.reporterId,
+      actorId,
+      reportId: report.id
+    }
+  });
+}
+
 router.post("/", authenticate, authorize("ADMIN", "TECHNICIAN"), async (req, res) => {
   try {
     const deviceId = Number(req.body.deviceId);
@@ -73,9 +101,10 @@ router.post("/", authenticate, authorize("ADMIN", "TECHNICIAN"), async (req, res
         const report = await tx.damageReport.findUnique({
           where: { id: reportId },
           include: {
+            room: { select: { id: true, code: true } },
             devices: {
               include: {
-                device: { select: { id: true } }
+                device: { select: { id: true, name: true } }
               }
             }
           }
@@ -113,6 +142,10 @@ router.post("/", authenticate, authorize("ADMIN", "TECHNICIAN"), async (req, res
           data: { status: "COMPLETED" }
         });
 
+        if (report.status !== "COMPLETED") {
+          await createCompletedNotification(tx, report, req.user.id);
+        }
+
         return tx.repairLog.findMany({
           where: { reportId, deviceId: { in: deviceIds } },
           orderBy: { id: "desc" },
@@ -148,18 +181,35 @@ router.post("/", authenticate, authorize("ADMIN", "TECHNICIAN"), async (req, res
       });
 
       if (reportId !== null) {
-        const reportDevices = await tx.damageReportDevice.findMany({
-          where: { reportId },
-          include: { device: { select: { status: true } } }
+        const report = await tx.damageReport.findUnique({
+          where: { id: reportId },
+          include: {
+            room: { select: { id: true, code: true } },
+            devices: {
+              include: {
+                device: { select: { id: true, name: true, status: true } }
+              }
+            }
+          }
         });
-        const allDevicesGood = reportDevices.every((item) =>
+
+        if (!report) {
+          throw Object.assign(new Error("REPORT_NOT_FOUND"), { statusCode: 404 });
+        }
+
+        const allDevicesGood = report.devices.every((item) =>
           item.deviceId === deviceId ? afterStatus === "GOOD" : item.device.status === "GOOD"
         );
+        const nextReportStatus = allDevicesGood ? "COMPLETED" : "IN_PROGRESS";
 
         await tx.damageReport.update({
           where: { id: reportId },
-          data: { status: allDevicesGood ? "COMPLETED" : "IN_PROGRESS" }
+          data: { status: nextReportStatus }
         });
+
+        if (nextReportStatus === "COMPLETED" && report.status !== "COMPLETED") {
+          await createCompletedNotification(tx, report, req.user.id);
+        }
       }
 
       return createdLog;
