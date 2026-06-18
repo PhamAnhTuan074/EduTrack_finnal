@@ -5,8 +5,8 @@ import api from "../api";
 export default function LoginPage() {
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState("admin");
-  const [password, setPassword] = useState("123456");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [rememberAccount, setRememberAccount] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
