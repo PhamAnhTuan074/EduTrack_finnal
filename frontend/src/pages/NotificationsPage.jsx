@@ -42,8 +42,11 @@ export default function NotificationsPage() {
 
   const [activeTab, setActiveTab] = useState("all");
   const [activeType, setActiveType] = useState("all");
+<<<<<<< HEAD
   const [search, setSearch] = useState("");
   const [sortOption, setSortOption] = useState("created-desc");
+=======
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
   const [selectedNotification, setSelectedNotification] = useState(null);
   const [notifications, setNotifications] = useState([]);
   const [counts, setCounts] = useState({ all: 0, unread: 0, read: 0 });
@@ -119,6 +122,7 @@ export default function NotificationsPage() {
     navigate("/reports");
   }
 
+<<<<<<< HEAD
   const normalizedSearch = search.trim().toLowerCase();
   const filteredNotifications = useMemo(() => {
     const nextNotifications = notifications.filter((notification) => {
@@ -147,6 +151,11 @@ export default function NotificationsPage() {
       }
     });
   }, [activeType, normalizedSearch, notifications, sortOption]);
+=======
+  const filteredNotifications = activeType === "all"
+    ? notifications
+    : notifications.filter((notification) => notification.type === activeType);
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
 
   function countByType(type) {
     return type === "all"
@@ -182,6 +191,7 @@ export default function NotificationsPage() {
           </button>
         </div>
 
+<<<<<<< HEAD
         <div className="admin-page-toolbar">
           <div className="admin-search-box">
             <span>⌕</span>
@@ -195,6 +205,8 @@ export default function NotificationsPage() {
           </select>
         </div>
 
+=======
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
         <div className="notification-filter-pills">
           {typeFilters.map((filter) => (
             <button

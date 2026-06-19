@@ -8,6 +8,7 @@ const roleLabels = {
   REPORTER: "Người báo hỏng"
 };
 
+<<<<<<< HEAD
 const deviceTypeLabels = {
   PROJECTOR: "Máy chiếu",
   TV: "Tivi",
@@ -77,11 +78,14 @@ function HorizontalBarChart({ items, emptyText }) {
   );
 }
 
+=======
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
 export default function DashboardPage() {
   const user = useMemo(() => JSON.parse(localStorage.getItem("user") || "null"), []);
 
   const [stats, setStats] = useState({
     totalRooms: 0,
+<<<<<<< HEAD
     totalDevices: 0,
     brokenDevices: 0,
     pendingReports: 0,
@@ -89,6 +93,10 @@ export default function DashboardPage() {
     deviceTypeSummary: [],
     reportStatusSummary: [],
     roomTypeSummary: [],
+=======
+    brokenDevices: 0,
+    pendingReports: 0,
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
     topBrokenRooms: []
   });
   const [error, setError] = useState("");
@@ -96,7 +104,11 @@ export default function DashboardPage() {
   async function loadStats() {
     try {
       const res = await api.get("/dashboard/stats");
+<<<<<<< HEAD
       setStats((current) => ({ ...current, ...res.data }));
+=======
+      setStats(res.data);
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
     } catch (err) {
       setError(err.response?.data?.message || "Không tải được dữ liệu dashboard");
     }
@@ -126,6 +138,7 @@ export default function DashboardPage() {
 
   const displayName = user?.fullName || user?.username || "Người dùng";
   const displayRole = roleLabels[user?.role] || user?.role || "Chưa có vai trò";
+<<<<<<< HEAD
   const deviceStatusChart = useMemo(
     () => buildChartItems(stats.deviceStatusSummary || [], deviceStatusLabels, "status"),
     [stats.deviceStatusSummary]
@@ -150,6 +163,8 @@ export default function DashboardPage() {
     })),
     [stats.topBrokenRooms]
   );
+=======
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
 
   return (
     <AppLayout
@@ -166,10 +181,13 @@ export default function DashboardPage() {
           <strong>{stats.totalRooms}</strong>
         </article>
         <article className="summary-card">
+<<<<<<< HEAD
           <span>Tổng số thiết bị</span>
           <strong>{stats.totalDevices}</strong>
         </article>
         <article className="summary-card">
+=======
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
           <span>Thiết bị đang hỏng</span>
           <strong>{stats.brokenDevices}</strong>
         </article>
@@ -183,6 +201,7 @@ export default function DashboardPage() {
         </article>
       </div>
 
+<<<<<<< HEAD
       <section className="dashboard-chart-grid" aria-label="Biểu đồ tổng quan">
         <article className="dashboard-chart-card">
           <div className="chart-card-header">
@@ -225,6 +244,8 @@ export default function DashboardPage() {
         <HorizontalBarChart items={topBrokenChart} emptyText="Chưa có thiết bị hỏng" />
       </section>
 
+=======
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
       <section className="table-section dashboard-section">
         <div className="section-heading-row">
           <h2>Top 5 phòng có nhiều thiết bị hỏng</h2>

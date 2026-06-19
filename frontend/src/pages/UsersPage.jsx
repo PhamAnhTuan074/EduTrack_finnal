@@ -16,7 +16,10 @@ export default function UsersPage() {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
   const [roleFilter, setRoleFilter] = useState("");
+<<<<<<< HEAD
   const [sortOption, setSortOption] = useState("name-asc");
+=======
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
   const [form, setForm] = useState(emptyForm);
   const [editingUserId, setEditingUserId] = useState(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -42,6 +45,7 @@ export default function UsersPage() {
   const adminCount = users.filter((item) => item.role === "ADMIN").length;
   const techCount = users.filter((item) => item.role === "TECHNICIAN").length;
   const reporterCount = users.filter((item) => item.role === "REPORTER").length;
+<<<<<<< HEAD
   const sortedUsers = useMemo(() => {
     return [...users].sort((a, b) => {
       switch (sortOption) {
@@ -62,6 +66,8 @@ export default function UsersPage() {
       }
     });
   }, [sortOption, users]);
+=======
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
 
   function updateField(field, value) {
     setForm((current) => ({ ...current, [field]: value }));
@@ -129,6 +135,7 @@ export default function UsersPage() {
     <AppLayout active="users" title="Quản lý người dùng" subtitle={`${users.length} người dùng trong hệ thống`} user={user}>
       <div className="admin-page-toolbar">
         <div className="admin-search-box"><span>⌕</span><input value={search} onChange={(e) => setSearch(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") loadUsers(); }} placeholder="Tìm tên, email, username..." /></div>
+<<<<<<< HEAD
         <select className="sort-select" value={sortOption} onChange={(e) => setSortOption(e.target.value)} aria-label="Sắp xếp người dùng">
           <option value="name-asc">Tên A-Z</option>
           <option value="name-desc">Tên Z-A</option>
@@ -138,6 +145,8 @@ export default function UsersPage() {
           <option value="created-newest">Mới tạo trước</option>
           <option value="created-oldest">Cũ nhất trước</option>
         </select>
+=======
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
         <button type="button" className="primary-action" onClick={openCreateForm}>+ Thêm người dùng</button>
       </div>
 
@@ -156,7 +165,11 @@ export default function UsersPage() {
         <table className="admin-data-table users-table">
           <thead><tr><th>Người dùng</th><th>Username</th><th>Email</th><th>Vai trò</th><th>Trạng thái</th><th>Ngày tạo</th><th>Thao tác</th></tr></thead>
           <tbody>
+<<<<<<< HEAD
             {isLoading ? <tr><td colSpan="7">Đang tải dữ liệu...</td></tr> : sortedUsers.length === 0 ? <tr><td colSpan="7">Chưa có người dùng</td></tr> : sortedUsers.map((item) => (
+=======
+            {isLoading ? <tr><td colSpan="7">Đang tải dữ liệu...</td></tr> : users.length === 0 ? <tr><td colSpan="7">Chưa có người dùng</td></tr> : users.map((item) => (
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
               <tr key={item.id}>
                 <td><div className="user-row"><span>{item.fullName?.charAt(0).toUpperCase()}</span><strong>{item.fullName}</strong></div></td>
                 <td className="code-cell">{item.username}</td>

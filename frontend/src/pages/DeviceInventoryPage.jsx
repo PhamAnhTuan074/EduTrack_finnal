@@ -36,8 +36,11 @@ const statusLabels = {
   REPAIRING: "Đang bảo trì"
 };
 
+<<<<<<< HEAD
 const statusSortOrder = { BROKEN: 0, REPAIRING: 1, GOOD: 2 };
 
+=======
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
 const permissionDeniedMessage = "Bạn không có quyền thực hiện thao tác này";
 
 export default function DeviceInventoryPage() {
@@ -53,7 +56,10 @@ export default function DeviceInventoryPage() {
   const [typeFilter, setTypeFilter] = useState("");
   const [roomFilter, setRoomFilter] = useState(initialRoomId);
   const [statusFilter, setStatusFilter] = useState("");
+<<<<<<< HEAD
   const [sortOption, setSortOption] = useState("code-asc");
+=======
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
   const [form, setForm] = useState(emptyForm);
   const [editingDeviceId, setEditingDeviceId] = useState(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -119,6 +125,7 @@ export default function DeviceInventoryPage() {
 
   const canManageDevices = user?.role === "ADMIN";
   const canCreateRepairLog = user?.role === "ADMIN" || user?.role === "TECHNICIAN";
+<<<<<<< HEAD
   const sortedDevices = useMemo(() => {
     return [...devices].sort((a, b) => {
       switch (sortOption) {
@@ -139,6 +146,8 @@ export default function DeviceInventoryPage() {
       }
     });
   }, [devices, sortOption]);
+=======
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
 
   function updateField(field, value) {
     setForm((current) => ({ ...current, [field]: value }));
@@ -262,6 +271,7 @@ export default function DeviceInventoryPage() {
           <option value="">Tất cả phòng</option>
           {rooms.map((room) => <option key={room.id} value={room.id}>{room.code}</option>)}
         </select>
+<<<<<<< HEAD
         <select value={sortOption} onChange={(e) => setSortOption(e.target.value)} aria-label="Sắp xếp thiết bị">
           <option value="code-asc">Mã thiết bị A-Z</option>
           <option value="code-desc">Mã thiết bị Z-A</option>
@@ -271,6 +281,8 @@ export default function DeviceInventoryPage() {
           <option value="imported-oldest">Ngày nhập cũ nhất</option>
           <option value="status-risk">Ưu tiên hỏng/bảo trì</option>
         </select>
+=======
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
         <button type="button" onClick={loadDevices}>Tìm kiếm</button>
       </section>
 
@@ -300,9 +312,15 @@ export default function DeviceInventoryPage() {
           <tbody>
             {isLoading ? (
               <tr><td colSpan="7">Đang tải dữ liệu...</td></tr>
+<<<<<<< HEAD
             ) : sortedDevices.length === 0 ? (
               <tr><td colSpan="7">Không tìm thấy thiết bị phù hợp</td></tr>
             ) : sortedDevices.map((device) => (
+=======
+            ) : devices.length === 0 ? (
+              <tr><td colSpan="7">Không tìm thấy thiết bị phù hợp</td></tr>
+            ) : devices.map((device) => (
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
               <tr key={device.id}>
                 <td className="code-cell">{device.code}</td>
                 <td>{device.name}</td>

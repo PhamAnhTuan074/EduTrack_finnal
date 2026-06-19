@@ -26,7 +26,10 @@ export default function RoomsPage() {
   const [editingRoomId, setEditingRoomId] = useState(null);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
+<<<<<<< HEAD
   const [sortOption, setSortOption] = useState("code-asc");
+=======
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -50,6 +53,7 @@ export default function RoomsPage() {
   useEffect(() => { loadRooms(""); }, []);
 
   const normalizedSearch = search.trim().toLowerCase();
+<<<<<<< HEAD
   const visibleRooms = useMemo(() => {
     const filteredRooms = rooms.filter((room) => {
       const searchableText = [
@@ -83,6 +87,13 @@ export default function RoomsPage() {
       }
     });
   }, [normalizedSearch, rooms, sortOption, statusFilter]);
+=======
+  const filteredRooms = rooms.filter((room) => {
+    const matchesSearch = room.code.toLowerCase().includes(normalizedSearch);
+    const matchesStatus = statusFilter ? room.status === statusFilter : true;
+    return matchesSearch && matchesStatus;
+  });
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
   const activeCount = rooms.filter((room) => room.status === "ACTIVE").length;
   const maintenanceCount = rooms.filter((room) => room.status === "MAINTENANCE").length;
 
@@ -178,6 +189,7 @@ export default function RoomsPage() {
           <span>⌕</span>
           <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Tìm mã / tên phòng..." />
         </div>
+<<<<<<< HEAD
         <select className="sort-select" value={sortOption} onChange={(e) => setSortOption(e.target.value)} aria-label="Sắp xếp phòng học">
           <option value="code-asc">Mã phòng A-Z</option>
           <option value="code-desc">Mã phòng Z-A</option>
@@ -186,6 +198,8 @@ export default function RoomsPage() {
           <option value="devices-desc">Nhiều thiết bị nhất</option>
           <option value="devices-asc">Ít thiết bị nhất</option>
         </select>
+=======
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
         <button type="button" className="primary-action" onClick={openCreateForm}>+ Thêm phòng</button>
       </div>
 
@@ -200,11 +214,19 @@ export default function RoomsPage() {
 
       {isLoading ? (
         <section className="empty-panel">Đang tải dữ liệu...</section>
+<<<<<<< HEAD
       ) : visibleRooms.length === 0 ? (
         <section className="empty-panel">Không tìm thấy phòng học phù hợp</section>
       ) : (
         <section className="room-card-grid">
           {visibleRooms.map((room) => (
+=======
+      ) : filteredRooms.length === 0 ? (
+        <section className="empty-panel">Không tìm thấy phòng học phù hợp</section>
+      ) : (
+        <section className="room-card-grid">
+          {filteredRooms.map((room) => (
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
             <article key={room.id} className="room-card">
               <div className="room-icon">🏫</div>
               <h2>{room.code}</h2>

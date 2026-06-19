@@ -28,8 +28,11 @@ const deviceStatusLabels = {
   REPAIRING: "Đang sửa chữa"
 };
 
+<<<<<<< HEAD
 const statusSortOrder = { BROKEN: 0, REPAIRING: 1, GOOD: 2 };
 
+=======
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
 const permissionDeniedMessage = "Bạn không có quyền thực hiện thao tác này";
 
 export default function DevicesPage() {
@@ -42,12 +45,16 @@ export default function DevicesPage() {
   const [form, setForm] = useState(emptyForm);
   const [editingDeviceId, setEditingDeviceId] = useState(null);
   const [search, setSearch] = useState("");
+<<<<<<< HEAD
   const [sortOption, setSortOption] = useState("code-asc");
+=======
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const canManageDevices = user?.role === "ADMIN";
   const canCreateRepairLog = user?.role === "ADMIN" || user?.role === "TECHNICIAN";
+<<<<<<< HEAD
   const sortedDevices = useMemo(() => {
     return [...devices].sort((a, b) => {
       switch (sortOption) {
@@ -66,6 +73,8 @@ export default function DevicesPage() {
       }
     });
   }, [devices, sortOption]);
+=======
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
 
   async function loadDevices(nextSearch = search) {
     setIsLoading(true);
@@ -279,6 +288,7 @@ export default function DevicesPage() {
         <section className="table-section">
           <div className="toolbar">
             <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Tìm theo mã hoặc tên thiết bị" />
+<<<<<<< HEAD
             <select value={sortOption} onChange={(e) => setSortOption(e.target.value)} aria-label="Sắp xếp thiết bị">
               <option value="code-asc">Mã A-Z</option>
               <option value="code-desc">Mã Z-A</option>
@@ -287,6 +297,8 @@ export default function DevicesPage() {
               <option value="imported-oldest">Cũ nhất trước</option>
               <option value="status-risk">Ưu tiên hỏng</option>
             </select>
+=======
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
             <button type="button" onClick={() => loadDevices(search)}>Tìm kiếm</button>
             <button type="button" className="secondary-button" onClick={() => { setSearch(""); loadDevices(""); }}>Làm mới</button>
           </div>
@@ -308,9 +320,15 @@ export default function DevicesPage() {
             <tbody>
               {isLoading ? (
                 <tr><td colSpan="6">Đang tải dữ liệu...</td></tr>
+<<<<<<< HEAD
               ) : sortedDevices.length === 0 ? (
                 <tr><td colSpan="6">Không tìm thấy thiết bị phù hợp</td></tr>
               ) : sortedDevices.map((device) => (
+=======
+              ) : devices.length === 0 ? (
+                <tr><td colSpan="6">Không tìm thấy thiết bị phù hợp</td></tr>
+              ) : devices.map((device) => (
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
                 <tr key={device.id}>
                   <td>{device.code}</td>
                   <td>{device.name}</td>

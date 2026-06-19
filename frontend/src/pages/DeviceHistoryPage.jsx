@@ -17,8 +17,11 @@ export default function DeviceHistoryPage() {
 
   const [device, setDevice] = useState(null);
   const [repairLogs, setRepairLogs] = useState([]);
+<<<<<<< HEAD
   const [search, setSearch] = useState("");
   const [sortOption, setSortOption] = useState("repaired-desc");
+=======
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const canViewRepairHistory = user?.role === "ADMIN" || user?.role === "TECHNICIAN";
@@ -47,6 +50,7 @@ export default function DeviceHistoryPage() {
     loadHistory();
   }, [deviceId, canViewRepairHistory]);
 
+<<<<<<< HEAD
   const normalizedSearch = search.trim().toLowerCase();
   const visibleRepairLogs = useMemo(() => {
     const filteredLogs = repairLogs.filter((log) => {
@@ -80,6 +84,8 @@ export default function DeviceHistoryPage() {
     });
   }, [normalizedSearch, repairLogs, sortOption]);
 
+=======
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
   function logout() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -116,6 +122,7 @@ export default function DeviceHistoryPage() {
         {error && <p className="error-message">{error}</p>}
 
         <section className="table-section">
+<<<<<<< HEAD
           <div className="toolbar">
             <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Tìm nội dung, kỹ thuật viên, phiếu..." />
             <select value={sortOption} onChange={(e) => setSortOption(e.target.value)} aria-label="Sắp xếp lịch sử bảo trì">
@@ -127,6 +134,8 @@ export default function DeviceHistoryPage() {
             </select>
           </div>
 
+=======
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
           <table>
             <thead>
               <tr>
@@ -141,9 +150,15 @@ export default function DeviceHistoryPage() {
             <tbody>
               {isLoading ? (
                 <tr><td colSpan="6">Đang tải dữ liệu...</td></tr>
+<<<<<<< HEAD
               ) : visibleRepairLogs.length === 0 ? (
                 <tr><td colSpan="6">Thiết bị chưa có lịch sử sửa chữa</td></tr>
               ) : visibleRepairLogs.map((log) => (
+=======
+              ) : repairLogs.length === 0 ? (
+                <tr><td colSpan="6">Thiết bị chưa có lịch sử sửa chữa</td></tr>
+              ) : repairLogs.map((log) => (
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
                 <tr key={log.id}>
                   <td>{log.repairedAt?.slice(0, 10)}</td>
                   <td>{log.content}</td>

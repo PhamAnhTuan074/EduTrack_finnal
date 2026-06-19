@@ -647,6 +647,7 @@ a {
 
 .toolbar {
   display: grid;
+<<<<<<< HEAD
   grid-template-columns: minmax(220px, 1fr) minmax(170px, auto) auto auto;
   gap: 10px;
   align-items: center;
@@ -657,6 +658,13 @@ a {
   min-width: 170px;
 }
 
+=======
+  grid-template-columns: minmax(220px, 1fr) auto auto;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
 .table-section {
   overflow-x: auto;
 }
@@ -776,6 +784,7 @@ tr:hover td {
   margin-top: 18px;
 }
 
+<<<<<<< HEAD
 .dashboard-chart-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -891,6 +900,8 @@ tr:hover td {
   text-align: center;
 }
 
+=======
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
 .section-heading-row {
   display: flex;
   align-items: center;
@@ -920,10 +931,13 @@ tr:hover td {
     grid-template-columns: repeat(2, minmax(160px, 1fr));
   }
 
+<<<<<<< HEAD
   .dashboard-chart-grid {
     grid-template-columns: 1fr;
   }
 
+=======
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
   .room-form,
   .report-form {
     grid-template-columns: repeat(2, minmax(200px, 1fr));
@@ -977,7 +991,10 @@ tr:hover td {
   }
 
   .dashboard-grid,
+<<<<<<< HEAD
   .dashboard-chart-grid,
+=======
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
   .room-form,
   .report-form,
   .toolbar,
@@ -985,6 +1002,7 @@ tr:hover td {
     grid-template-columns: 1fr;
   }
 
+<<<<<<< HEAD
   .chart-card-header,
   .chart-row {
     grid-template-columns: 1fr;
@@ -999,6 +1017,8 @@ tr:hover td {
     text-align: left;
   }
 
+=======
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
   .device-checkbox-grid {
     grid-template-columns: 1fr;
   }
@@ -2210,6 +2230,7 @@ button,
   margin-bottom: 14px;
 }
 
+<<<<<<< HEAD
 .admin-page-toolbar .admin-search-box {
   flex: 1 1 280px;
 }
@@ -2219,6 +2240,8 @@ button,
   max-width: 100%;
 }
 
+=======
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
 .admin-search-box {
   display: flex;
   align-items: center;
@@ -2364,7 +2387,11 @@ button,
 
 .device-filter-panel {
   display: grid;
+<<<<<<< HEAD
   grid-template-columns: minmax(220px, 1fr) 160px 160px 190px auto;
+=======
+  grid-template-columns: minmax(220px, 1fr) 160px 160px auto;
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
   gap: 12px;
   border: 1px solid #263a5a;
   border-radius: 10px;
@@ -2609,10 +2636,13 @@ button,
     align-items: stretch;
     flex-direction: column;
   }
+<<<<<<< HEAD
   .sort-select {
     flex-basis: auto;
     width: 100%;
   }
+=======
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
   .device-filter-panel,
   .modal-grid {
     grid-template-columns: 1fr;

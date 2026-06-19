@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.get("/stats", authenticate, authorize("ADMIN", "TECHNICIAN", "REPORTER"), async (req, res) => {
   try {
+<<<<<<< HEAD
     const [
       totalRooms,
       totalDevices,
@@ -43,6 +44,13 @@ router.get("/stats", authenticate, authorize("ADMIN", "TECHNICIAN", "REPORTER"),
         _count: { id: true }
       }),
       prisma.device.groupBy({
+=======
+    const [totalRooms, brokenDevices, pendingReports, brokenGroups] = await Promise.all([
+      prisma.room.count(),
+      prisma.device.count({ where: { status: "BROKEN" } }),
+      prisma.damageReport.count({ where: { status: "PENDING" } }),
+      prisma.device.groupBy({
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
         by: ["roomId"],
         where: { status: "BROKEN" },
         _count: { id: true }
@@ -70,6 +78,7 @@ router.get("/stats", authenticate, authorize("ADMIN", "TECHNICIAN", "REPORTER"),
 
     return res.json({
       totalRooms,
+<<<<<<< HEAD
       totalDevices,
       brokenDevices,
       pendingReports,
@@ -93,6 +102,10 @@ router.get("/stats", authenticate, authorize("ADMIN", "TECHNICIAN", "REPORTER"),
         status: item.status,
         count: item._count.id
       })),
+=======
+      brokenDevices,
+      pendingReports,
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
       topBrokenRooms
     });
   } catch (error) {

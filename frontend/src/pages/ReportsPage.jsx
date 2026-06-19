@@ -22,9 +22,13 @@ export default function ReportsPage() {
   const user = useMemo(() => JSON.parse(localStorage.getItem("user") || "null"), []);
 
   const [reports, setReports] = useState([]);
+<<<<<<< HEAD
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [sortOption, setSortOption] = useState("created-desc");
+=======
+  const [statusFilter, setStatusFilter] = useState("");
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
   const [openActionReportId, setOpenActionReportId] = useState(null);
   const [selectedReport, setSelectedReport] = useState(null);
   const [message, setMessage] = useState("");
@@ -102,6 +106,7 @@ export default function ReportsPage() {
     navigate(`/repair-logs/new?reportId=${report.id}&complete=1`);
   }
 
+<<<<<<< HEAD
   const normalizedSearch = search.trim().toLowerCase();
   const visibleReports = useMemo(() => {
     const filteredReports = reports.filter((report) => {
@@ -140,6 +145,11 @@ export default function ReportsPage() {
       }
     });
   }, [normalizedSearch, reports, sortOption, statusFilter]);
+=======
+  const filteredReports = statusFilter
+    ? reports.filter((report) => report.status === statusFilter)
+    : reports;
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
 
   function countByStatus(status) {
     return status ? reports.filter((report) => report.status === status).length : reports.length;
@@ -155,6 +165,7 @@ export default function ReportsPage() {
       {message && <p className="success-message">{message}</p>}
       {error && <p className="error-message">{error}</p>}
 
+<<<<<<< HEAD
       <div className="admin-page-toolbar">
         <div className="admin-search-box">
           <span>⌕</span>
@@ -170,6 +181,8 @@ export default function ReportsPage() {
         </select>
       </div>
 
+=======
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
       <div className="filter-pills">
         {reportTabs.map((tab) => (
           <button
@@ -200,9 +213,15 @@ export default function ReportsPage() {
           <tbody>
             {isLoading ? (
               <tr><td colSpan="8">Đang tải dữ liệu...</td></tr>
+<<<<<<< HEAD
             ) : visibleReports.length === 0 ? (
               <tr><td colSpan="8">Chưa có phiếu báo hỏng</td></tr>
             ) : visibleReports.map((report) => (
+=======
+            ) : filteredReports.length === 0 ? (
+              <tr><td colSpan="8">Chưa có phiếu báo hỏng</td></tr>
+            ) : filteredReports.map((report) => (
+>>>>>>> 741e98d4b626de725b1b0468532cf241254b368a
               <tr key={report.id}>
                 <td>#{report.id}</td>
                 <td>{report.room?.code}</td>
